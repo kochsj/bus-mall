@@ -22,3 +22,6 @@ img {
     height: 100%;
     vertical-align: middle;
 }
+td {
+    text-align: center;
+}

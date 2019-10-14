@@ -93,8 +93,10 @@ function handleClick() {
       allProducts[i].votes++;
     }
   }
-  if(eventCounter === 24){
+  if(eventCounter === 2){
     onClick.removeEventListener('click', handleClick);
+    var removePictures = document.getElementById('imageContainer');
+    removePictures.remove();
     printTableHeadings();
   }
   eventCounter++;
@@ -105,28 +107,39 @@ renderProducts();
 //RESULTS TABLE DISPLAY///////////////////////
 var tableHeadings = document.getElementById('resultsTable');
 function printTableHeadings() {
-  var headerRow = document.createElement('th');
+  var headerRow = document.createElement('tr');
   tableHeadings.appendChild(headerRow);
-  headerRow.textContent = 'Products';
+  headerRow.textContent = '';
+  var productsHeader = document.createElement('th');
+  headerRow.appendChild(productsHeader);
+  productsHeader.textContent = 'Products';
   var viewsHeader = document.createElement('th');
-    tableHeadings.appendChild(viewsHeader);
-    viewsHeader.textContent = 'Total Views';
+  headerRow.appendChild(viewsHeader);
+  viewsHeader.textContent = 'Total Views';
   var clicksHeader = document.createElement('th');
-    tableHeadings.appendChild(clicksHeader);
-    clicksHeader.textContent = 'Total Clicks';
+  headerRow.appendChild(clicksHeader);
+  clicksHeader.textContent = 'Total Clicks';
+  var percentageHeader = document.createElement('th');
+  headerRow.appendChild(percentageHeader);
+  percentageHeader.textContent = 'Frequency Picked';
   for(var a = 0; a < allProducts.length; a++) {
     var rowData = document.createElement('tr');
-    headerRow.appendChild(rowData);
+    tableHeadings.appendChild(rowData);
     rowData.setAttribute('class', 'products');
     rowData.textContent = `${(allProducts[a].name).toUpperCase()}`;
-  }
-  for(var i = 0; i < allProducts.length; i++) {
     var viewsByProduct = document.createElement('td');
-    rowData[i].appendChild(viewsByProduct);
-    viewsByProduct.textContent = `${allProducts[i].views}`;
+    rowData.appendChild(viewsByProduct);
+    viewsByProduct.textContent = `${allProducts[a].views}`;
     var clicksByProduct = document.createElement('td');
-    clicksHeader.appendChild(clicksByProduct);
-    clicksByProduct.textContent = `${allProducts[i].clicks}`;
+    rowData.appendChild(clicksByProduct);
+    clicksByProduct.textContent = `${allProducts[a].votes}`;
+    var averagePicked = (allProducts[a].votes)/(allProducts[a].views);
+    if(isNaN(averagePicked)){
+      averagePicked = 0;
+    }
+    var percentagePicked = document.createElement('td');
+    rowData.appendChild(percentagePicked);
+    percentagePicked.textContent = `${averagePicked}`;
   }
 }
 
