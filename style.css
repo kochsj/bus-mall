@@ -1,0 +1,12 @@
+body {
+    width: 100%;
+}
+#imageContainer {
+    width: 100%;
+    margin: 0vw;
+    padding: 0vw;
+}
+img {
+    display: inline-block;
+    width: 30%;
+}
