@@ -7,20 +7,23 @@ var makeRandom = function(min, max) {
   return Math.floor(Math.random()*(max - min + 1)) + min;
 };
 
+//GLOBAL VARIABLES/////////////////////////////////////////////////
 var leftImgEl = document.getElementById('left');
 var rightImgEl = document.getElementById('right');
 var centerImgEl = document.getElementById('center');
-
 var allProducts = [];
 
+
+//PRODUCT OBJECT CONSTRUCTOR FUNCTION/////////////////////////////////////
 function Product(name) {
   this.name = name;
-  this.path = `img/${name}.jpg`;
+  this.path = `images/${name}.jpg`;
   this.views = 0;
   this.votes = 0;
   allProducts.push(this);
 }
 
+//DISPLAYING THREE UNIQUE RANDOM PICTURES ON THE PAGE//////////////////////
 function renderProducts() {
   //store already picked values
   var randomNumbersGenerated = [];
@@ -43,31 +46,87 @@ function renderProducts() {
   leftImgEl.src = allProducts[randomNumbersGenerated[0]].path;
   leftImgEl.name = allProducts[randomNumbersGenerated[0]].name;
   leftImgEl.title = allProducts[randomNumbersGenerated[0]].name;
+  allProducts[randomNumbersGenerated[0]].views++;
   centerImgEl.src = allProducts[randomNumbersGenerated[1]].path;
   centerImgEl.name = allProducts[randomNumbersGenerated[1]].name;
   centerImgEl.title = allProducts[randomNumbersGenerated[1]].name;
+  allProducts[randomNumbersGenerated[1]].views++;
   rightImgEl.src = allProducts[randomNumbersGenerated[2]].path;
   rightImgEl.name = allProducts[randomNumbersGenerated[2]].name;
   rightImgEl.title = allProducts[randomNumbersGenerated[2]].name;
+  allProducts[randomNumbersGenerated[2]].views++;
 }
 
+//PRODUCT OBJECT CREATION////////////////////////////////////////
+//loop? new Product(images/[i])??
 new Product('bag');
 new Product('banana');
 new Product('bathroom');
 new Product('boots');
 new Product('breakfast');
+new Product('bubblegum');
 new Product('chair');
+new Product('cthulhu');
+new Product('dog-duck');
+new Product('dragon');
+new Product('pen');
+new Product('pet-sweep');
+new Product('scissors');
+new Product('shark');
+new Product('sweep');
+new Product('tauntaun');
+new Product('unicorn');
+new Product('usb');
+new Product('water-can');
+new Product('wine-glass');
 
+//ON CLICK EVENT HANDLER/////////////////////////////////////////
+var onClick = document.getElementById('imageContainer');
+onClick.addEventListener('click', handleClick);
+var eventCounter = 0;
 
-// function handleClick() {
-//   var chosenImage = event.target.title;
-//   console.log('chosenImage: ', chosenImage);
-//   for( var i = 0; i < allProducts.length; i++) {
-//     if(allProducts[i].name === chosenImage){
-//       allProducts[i].votes++;
-//     }
-//   }
-// }
-
+function handleClick() {
+  var chosenImage = event.target.title;
+  console.log('chosenImage: ', chosenImage);
+  for(var i = 0; i < allProducts.length; i++) {
+    if(allProducts[i].name === chosenImage){
+      allProducts[i].votes++;
+    }
+  }
+  if(eventCounter === 24){
+    onClick.removeEventListener('click', handleClick);
+    printTableHeadings();
+  }
+  eventCounter++;
+  renderProducts();
+}
 renderProducts();
+
+//RESULTS TABLE DISPLAY///////////////////////
+var tableHeadings = document.getElementById('resultsTable');
+function printTableHeadings() {
+  var headerRow = document.createElement('th');
+  tableHeadings.appendChild(headerRow);
+  headerRow.textContent = 'Products';
+  var viewsHeader = document.createElement('th');
+    tableHeadings.appendChild(viewsHeader);
+    viewsHeader.textContent = 'Total Views';
+  var clicksHeader = document.createElement('th');
+    tableHeadings.appendChild(clicksHeader);
+    clicksHeader.textContent = 'Total Clicks';
+  for(var a = 0; a < allProducts.length; a++) {
+    var rowData = document.createElement('tr');
+    headerRow.appendChild(rowData);
+    rowData.setAttribute('class', 'products');
+    rowData.textContent = `${(allProducts[a].name).toUpperCase()}`;
+  }
+  for(var i = 0; i < allProducts.length; i++) {
+    var viewsByProduct = document.createElement('td');
+    rowData[i].appendChild(viewsByProduct);
+    viewsByProduct.textContent = `${allProducts[i].views}`;
+    var clicksByProduct = document.createElement('td');
+    clicksHeader.appendChild(clicksByProduct);
+    clicksByProduct.textContent = `${allProducts[i].clicks}`;
+  }
+}
 

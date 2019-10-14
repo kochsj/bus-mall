@@ -3,10 +3,22 @@ body {
 }
 #imageContainer {
     width: 100%;
+    height: 35vw;
+    overflow: hidden;
     margin: 0vw;
     padding: 0vw;
+    background-color: black;
+}
+div {
+    vertical-align: middle;
+    display: inline-block;
+    width: 27%;
+    height: 30vw;
+    margin: 3%;
 }
 img {
     display: inline-block;
-    width: 30%;
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
 }
