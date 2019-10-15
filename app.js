@@ -8,12 +8,8 @@ var makeRandom = function(min, max) {
 };
 
 //GLOBAL VARIABLES/////////////////////////////////////////////////
-// var leftImgEl = document.getElementById('left');
-// var rightImgEl = document.getElementById('right');
-// var centerImgEl = document.getElementById('center');
 var allProducts = [];
 var clearArray = [];
-
 
 //PRODUCT OBJECT CONSTRUCTOR FUNCTION/////////////////////////////////////
 function Product(name) {
@@ -23,40 +19,6 @@ function Product(name) {
   this.votes = 0;
   allProducts.push(this);
 }
-
-//DISPLAYING THREE UNIQUE RANDOM PICTURES ON THE PAGE//////////////////////
-// function renderProducts() {
-//   //store already picked values
-//   var randomNumbersGenerated = [];
-//   //get a random index
-//   var randomIndex = makeRandom(0, ((allProducts.length)-1));
-//   randomNumbersGenerated.push(randomIndex);
-//   //display a product with the random index number
-//   randomIndex = makeRandom(0, ((allProducts.length)-1));
-//   randomNumbersGenerated.push(randomIndex);
-//   while(randomNumbersGenerated[0] === randomNumbersGenerated[1]) {
-//     console.log('Duplicate found. Re-rolling');
-//     randomNumbersGenerated[1] = makeRandom(0, ((allProducts.length)-1));
-//   }
-//   randomIndex = makeRandom(0, ((allProducts.length)-1));
-//   randomNumbersGenerated.push(randomIndex);
-//   while(randomNumbersGenerated[2] === randomNumbersGenerated[1] || randomNumbersGenerated[2] === randomNumbersGenerated[0]) {
-//     console.log('Duplicate found. Re-rolling');
-//     randomNumbersGenerated[2] = makeRandom(0, ((allProducts.length)-1));
-//   }
-//   leftImgEl.src = allProducts[randomNumbersGenerated[0]].path;
-//   leftImgEl.name = allProducts[randomNumbersGenerated[0]].name;
-//   leftImgEl.title = allProducts[randomNumbersGenerated[0]].name;
-//   allProducts[randomNumbersGenerated[0]].views++;
-//   centerImgEl.src = allProducts[randomNumbersGenerated[1]].path;
-//   centerImgEl.name = allProducts[randomNumbersGenerated[1]].name;
-//   centerImgEl.title = allProducts[randomNumbersGenerated[1]].name;
-//   allProducts[randomNumbersGenerated[1]].views++;
-//   rightImgEl.src = allProducts[randomNumbersGenerated[2]].path;
-//   rightImgEl.name = allProducts[randomNumbersGenerated[2]].name;
-//   rightImgEl.title = allProducts[randomNumbersGenerated[2]].name;
-//   allProducts[randomNumbersGenerated[2]].views++;
-// }
 
 //PRODUCT OBJECT CREATION////////////////////////////////////////
 //loop? new Product(images/[i])??
@@ -115,6 +77,55 @@ function handleClick() {
   howManyPictures();
 }
 
+//USERFORM EVENT LISTENER - HOW MANY IMAGES TO SHOW/////////////////////
+var onSubmit = document.getElementById('userForm');
+onSubmit.addEventListener('submit', handleSubmit);
+
+function handleSubmit() {
+  event.preventDefault();
+  if(event.target.numberOfPictures.value > 0){
+    if(event.target.numberOfPictures.value <= 9){
+      numberOfPics = (event.target.numberOfPictures.value);
+      createUniqueArray();
+      howManyPictures();
+    } else {
+      alert('Invalid Entry. Please choose a number between 1 and 9.');
+      return;
+    }
+  }else {
+    alert('Invalid Entry. Please choose a number between 1 and 9.');
+    return;
+  }
+}
+//making a unique random numbers array from user input
+var uniqueArray = [];
+function createUniqueArray(){
+  while(uniqueArray.length < 2*(numberOfPics)){
+    var randomIndex = makeRandom(0, ((allProducts.length)-1));
+    while(!uniqueArray.includes(randomIndex)){
+      uniqueArray.push(randomIndex);
+    }
+  }
+}
+
+
+//RENDER NUMBER OF IMAGES SELECTED////////////////////////////
+var imageParent = document.getElementById('imageContainer');
+function howManyPictures() {
+  onSubmit.remove();
+  for( var i = 0; i < numberOfPics; i++){
+    var temp = uniqueArray.shift();
+    var createImgElement = document.createElement('img');
+    imageParent.appendChild(createImgElement);
+    createImgElement.setAttribute('id', `${temp}`);
+    clearArray.push(temp);
+    createImgElement.setAttribute('src', `${allProducts[temp].path}`);
+    createImgElement.setAttribute('title', `${allProducts[temp].name}`);
+    allProducts[temp].views++;
+    createUniqueArray();
+  }
+}
+
 //RESULTS TABLE DISPLAY///////////////////////
 var tableHeadings = document.getElementById('resultsTable');
 var resetButton = document.getElementById('buttonPlacement');
@@ -157,46 +168,41 @@ function printTableHeadings() {
 }
 var numberOfPics = 0;
 
-//USERFORM EVENT LISTENER/////////////////////
-var onSubmit = document.getElementById('userForm');
-onSubmit.addEventListener('submit', handleSubmit);
-
-function handleSubmit() {
-  event.preventDefault();
-  if(event.target.numberOfPictures.value <= 19){
-    numberOfPics = event.target.numberOfPictures.value;
-    howManyPictures();
-  } else {
-    alert('Invalid Entry. Please choose a number between 1 and 19.');
-    return;
-  }
-}
-
-//HOW MANY IMAGES TO SHOW////////////////////////////
-
-//store already picked values
-var imageParent = document.getElementById('imageContainer');
-function howManyPictures() {
-  onSubmit.remove();
-  var randomNumbersGenerated = [];
-  for( var i = 0; i < numberOfPics; i++){
-    //get a random index
-    var randomIndex = makeRandom(0, ((allProducts.length)-1));
-    while(randomNumbersGenerated.includes(randomIndex)){
-      console.log('Duplicate found. Re-rolling');
-      randomIndex = makeRandom(0, ((allProducts.length)-1));
-    }
-    randomNumbersGenerated.push(randomIndex);
-    //create img element
-    var createImgElement = document.createElement('img');
-    imageParent.appendChild(createImgElement);
-    //adding src name title
-    createImgElement.setAttribute('id', `${randomIndex}`);
-    clearArray.push(randomIndex);
-    createImgElement.setAttribute('src', `${allProducts[randomIndex].path}`);
-    createImgElement.setAttribute('title', `${allProducts[randomIndex].name}`);
-    allProducts[randomIndex].views++;
-  }
-}
-
-
+//MAKING A BAR GRAPH////////////////////////////
+// <!-- from https://www.chartjs.org/docs/latest/ -->
+// var ctx = document.getElementById('myGraph').getContext('2d');
+// var myChart = new Chart(ctx, {
+//   type: 'bar',
+//   data: {
+//     labels: ['Banana', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+//     datasets: [{
+//       label: '# of Votes',
+//       data: [12, 19, 3, 5, 2, 3],
+//       backgroundColor: [
+//         'rgba(255, 99, 132, 0.2)',
+//         'rgba(54, 162, 235, 0.2)',
+//         'rgba(255, 206, 86, 0.2)',
+//         'rgba(75, 192, 192, 0.2)',
+//         'rgba(153, 102, 255, 0.2)',
+//         'rgba(255, 159, 64, 0.2)'
+//       ],
+//       borderColor: [
+//         'rgba(255, 99, 132, 1)',
+//         'rgba(54, 162, 235, 1)',
+//         'rgba(255, 206, 86, 1)',
+//         'rgba(75, 192, 192, 1)',
+//         'rgba(153, 102, 255, 1)',
+//         'rgba(255, 159, 64, 1)'
+//       ],
+//       borderWidth: 5
+//     }]
+//   },
+//   options: {
+//     scales: {
+//       yAxes: [{
+//         ticks: {
+//           beginAtZero: true
+//         }
+//       }]
+//     }
+//   }
