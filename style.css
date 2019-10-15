@@ -1,0 +1,71 @@
+body {
+    width: 100%;
+    background-color: steelblue;
+}
+div {
+    vertical-align: middle;
+    display: inline-block;
+    width: 27%;
+    height: 30vw;
+    margin: 3%;
+}
+img {
+    display: inline-block;
+    width: 32%;
+    height: 30vw;
+    vertical-align: middle;
+    border: solid black 0.5vw;
+}
+table {
+    width: 80%;
+    margin-left: 10%;
+}
+.tableBorder {
+    border: solid black 0.3vw;
+}
+th, tr, td {
+    width: 20vw;
+}
+td {
+    text-align: center;
+}
+tr:nth-child(odd) {
+    background-color: darkgrey;
+}
+th {
+    background-color: grey;
+}
+form {
+    margin-top: 10vw;
+}
+form,fieldset {
+    width: 70%;
+    height: 25vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+fieldset {
+    background-color: black;
+    color: white;
+}
+label, input, button {
+    display: block;
+    font-size: 3vw;
+    margin: 2vw;
+}
+input {
+    width: 95%;
+}
+button {
+    margin-left: auto;
+    
+}
+p {
+    font-size: 2vw;
+}
+h1, p, label, input, button {
+text-align: center;
+}
+h1 {
+    font-size: 4vw;
+}
