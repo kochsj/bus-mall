@@ -155,9 +155,12 @@ function handleReset(){
   }
   tableHeadings.removeChild(tableHeadings.firstChild);
   printTableHeadings();
+  myChart.data.datasets[0].data = [];
+  myChart.data.datasets[1].data = [];
   myChart.update();
 }
 //USERFORM EVENT LISTENER - HOW MANY IMAGES TO SHOW/////////////////////
+var numberOfPics = 0;
 var onSubmit = document.getElementById('userForm');
 onSubmit.addEventListener('submit', handleSubmit);
 
@@ -249,18 +252,6 @@ function printTableHeadings() {
     percentagePicked.textContent = `${averagePicked.toFixed(2)}%`;
   }
 }
-
-var numberOfPics = 0;
-
-//Constructor(?)/////
-// function fillChart() {
-//   for(var c = 0; c < allProducts.length; c++) {
-//     var pictureName = ;
-//     myChart.data.labels.push(allProducts[c].name);
-//     allProducts[c].views.push(myChart.data.datasets[0].data);
-//     allProducts[c].votes.push(myChart.data.datasets[1].data);
-//   }
-// }
 
 //MAKING A BAR GRAPH////////////////////////////
 // <!-- from https://www.chartjs.org/docs/latest/ -->
