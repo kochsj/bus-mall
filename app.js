@@ -144,15 +144,16 @@ function handleClick() {
 }
 
 //RESET LOCALSTORAGE EVENT LISTENER////////////////////////////////////
-// var buttonPressed = document.getElementById('refreshData');
-// buttonPressed.addEventListener('click', handleReset);
-
+var htmlClassProducts = document.getElementsByClassName('products');
 function handleReset(){
   event.preventDefault();
   localStorage.setItem('data', '[]');
-  while(tableHeadings.firstChild){
-    tableHeadings.removeChild(tableHeadings.firstChild);
+  for(var i = 0; i < 20; i++){
+    while(htmlClassProducts[i].firstChild){
+      htmlClassProducts[i].removeChild(htmlClassProducts[i].firstChild);
+    }
   }
+  tableHeadings.removeChild(tableHeadings.firstChild);
   printTableHeadings();
   myChart.update();
 }
