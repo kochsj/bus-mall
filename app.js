@@ -97,20 +97,20 @@ onSubmit.addEventListener('submit', handleSubmit);
 function handleSubmit() {
   event.preventDefault();
   if(event.target.numberOfPictures.value > 0){
-    if(event.target.numberOfPictures.value <= 9){
+    if(event.target.numberOfPictures.value <= 10){
       numberOfPics = (event.target.numberOfPictures.value);
       createUniqueArray();
       howManyPictures();
     } else {
-      alert('Invalid Entry. Please choose a number between 1 and 9.');
+      alert('Invalid Entry. Please choose a number between 1 and 10.');
       return;
     }
   }else {
-    alert('Invalid Entry. Please choose a number between 1 and 9.');
+    alert('Invalid Entry. Please choose a number between 1 and 10.');
     return;
   }
 }
-//making a unique random numbers array from user input
+//USER STORY ONE - making a unique random numbers array from user input////////////////
 var uniqueArray = [];
 function createUniqueArray(){
   while(uniqueArray.length < 2*(numberOfPics)){
