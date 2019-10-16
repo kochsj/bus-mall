@@ -93,10 +93,16 @@ function handleClick() {
     toggleHideDiv.setAttribute('style', 'display: block');
     tableHeadings.setAttribute('style', 'margin-top: 30vw;');
     printTableHeadings();
+    var resetButton = document.getElementById('buttonPlacement');
+    var refreshLinkButton = document.createElement('button');
+    resetButton.appendChild(refreshLinkButton);
     var refreshLink = document.createElement('a');
     refreshLink.setAttribute('href', 'index.html');
-    resetButton.appendChild(refreshLink);
+    refreshLinkButton.appendChild(refreshLink);
     refreshLink.textContent = 'Refresh Page';
+    var refreshDataButton = document.createElement('button');
+    resetButton.appendChild(refreshDataButton);
+    refreshDataButton.textContent = 'Reset Stored Data';
     console.log(allProducts);
 //I THINK THIS IS WHERE I WANT TO STORE THE DATA IN LOCAL STORAGE//////////
     var storingData = JSON.stringify(allProducts);
@@ -164,7 +170,6 @@ function howManyPictures() {
 
 //RESULTS TABLE DISPLAY///////////////////////
 var tableHeadings = document.getElementById('resultsTable');
-var resetButton = document.getElementById('buttonPlacement');
 function printTableHeadings() {
   tableHeadings.setAttribute('class', 'tableBorder');
   var headerRow = document.createElement('tr');
