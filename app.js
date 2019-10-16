@@ -61,6 +61,16 @@ function handleClick() {
     onClick.removeEventListener('click', handleClick);
     var removePictures = document.getElementById('imageContainer');
     removePictures.remove();
+    // var newCanvas = document.createElement('canvas');
+    // newCanvas.setAttribute('id', 'myGraph');
+    // var createCanvas = document.getElementById('canvasPlacement');
+    // createCanvas.appendChild(newCanvas);
+    for(var f = 0; f < allProducts.length; f++) {
+      myChart.data.labels.push(allProducts[f].name);
+      myChart.data.datasets[0].data.push(allProducts[f].views);
+      myChart.data.datasets[1].data.push(allProducts[f].votes);
+    }
+    myChart.update();
     printTableHeadings();
     var refreshLink = document.createElement('a');
     refreshLink.setAttribute('href', 'index.html');
@@ -147,16 +157,20 @@ function printTableHeadings() {
   headerRow.appendChild(percentageHeader);
   percentageHeader.textContent = 'Frequency Picked';
   for(var a = 0; a < allProducts.length; a++) {
+    //names
     var rowData = document.createElement('tr');
     tableHeadings.appendChild(rowData);
     rowData.setAttribute('class', 'products');
     rowData.textContent = `${(allProducts[a].name).toUpperCase()}`;
+    //views
     var viewsByProduct = document.createElement('td');
     rowData.appendChild(viewsByProduct);
     viewsByProduct.textContent = `${allProducts[a].views}`;
+    //votes
     var clicksByProduct = document.createElement('td');
     rowData.appendChild(clicksByProduct);
     clicksByProduct.textContent = `${allProducts[a].votes}`;
+    //frequency
     var averagePicked = ((allProducts[a].votes)/(allProducts[a].views))*100;
     if(isNaN(averagePicked)){
       averagePicked = 0;
@@ -168,22 +182,33 @@ function printTableHeadings() {
 }
 var numberOfPics = 0;
 
+//Constructor(?)/////
+// function fillChart() {
+//   for(var c = 0; c < allProducts.length; c++) {
+//     var pictureName = ;
+//     myChart.data.labels.push(allProducts[c].name);
+//     allProducts[c].views.push(myChart.data.datasets[0].data);
+//     allProducts[c].votes.push(myChart.data.datasets[1].data);
+//   }
+// }
+
 //MAKING A BAR GRAPH////////////////////////////
 // <!-- from https://www.chartjs.org/docs/latest/ -->
+
 var ctx = document.getElementById('myGraph').getContext('2d');
 var myChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ['Banana', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Mangosteen'],
+    labels: [],
     datasets: [{
       label: '# of Views',
-      data: [12, 19, 3, 5, 2, 3, 10],
+      data: [],
       backgroundColor: 'rgba(255, 99, 132, 0.2)',
       borderColor: 'rgba(255, 99, 132, 1)',
       borderWidth: 5,
     }, {
       label: '# of Clicks',
-      data: [3, 0, 4, 2, 5, 1, 10],
+      data: [],
       backgroundColor: 'rgba(75, 192, 192, 0.2)',
       borderColor: 'rgba(75, 192, 192, 0.2)',
       borderWidth: 5,
@@ -199,3 +224,4 @@ var myChart = new Chart(ctx, {
     }
   }
 });
+
