@@ -11,7 +11,8 @@ var allProducts = [];
 var clearArray = [];
 
 //CHECKING IF THERE IS DATA IN LOCAL STORAGE//////////////////////
-if(localStorage.hasOwnProperty('data') === true){
+// if(localStorage.hasOwnProperty('data') === true){
+if(localStorage.data){
   var grabData = localStorage.getItem('data');
   var dataParsed = JSON.parse(grabData);
   for(var i = 0; i < dataParsed.length; i++){
@@ -19,26 +20,26 @@ if(localStorage.hasOwnProperty('data') === true){
   }
 } else {
   //PRODUCT OBJECT CREATION////////////////////////////////////////
-  new Product('bag', 0, 0);
-  new Product('banana', 0, 0);
-  new Product('bathroom', 0, 0);
-  new Product('boots', 0, 0);
-  new Product('breakfast', 0, 0);
-  new Product('bubblegum', 0, 0);
-  new Product('chair', 0, 0);
-  new Product('cthulhu', 0, 0);
-  new Product('dog-duck', 0, 0);
-  new Product('dragon', 0, 0);
-  new Product('pen', 0, 0);
-  new Product('pet-sweep', 0, 0);
-  new Product('scissors', 0, 0);
-  new Product('shark', 0, 0);
-  new Product('sweep', 0, 0);
-  new Product('tauntaun', 0, 0);
-  new Product('unicorn', 0, 0);
-  new Product('usb', 0, 0);
-  new Product('water-can', 0, 0);
-  new Product('wine-glass', 0, 0);
+  // new Product('bag', 0, 0);
+  // new Product('banana', 0, 0);
+  // new Product('bathroom', 0, 0);
+  // new Product('boots', 0, 0);
+  // new Product('breakfast', 0, 0);
+  // new Product('bubblegum', 0, 0);
+  // new Product('chair', 0, 0);
+  // new Product('cthulhu', 0, 0);
+  // new Product('dog-duck', 0, 0);
+  // new Product('dragon', 0, 0);
+  // new Product('pen', 0, 0);
+  // new Product('pet-sweep', 0, 0);
+  // new Product('scissors', 0, 0);
+  // new Product('shark', 0, 0);
+  // new Product('sweep', 0, 0);
+  // new Product('tauntaun', 0, 0);
+  // new Product('unicorn', 0, 0);
+  // new Product('usb', 0, 0);
+  // new Product('water-can', 0, 0);
+  // new Product('wine-glass', 0, 0);
 }
 
 //RANDOM NUMBER GENERATOR/////////////////////////////////////////
@@ -71,6 +72,7 @@ function handleClick() {
   for(var i = 0; i < allProducts.length; i++) {
     if(allProducts[i].name === chosenImage){
       allProducts[i].votes++;
+      console.log('number of votes: ' + allProducts[i].votes);
     }
   }
   if(eventCounter === 24){
@@ -95,6 +97,11 @@ function handleClick() {
     refreshLink.setAttribute('href', 'index.html');
     resetButton.appendChild(refreshLink);
     refreshLink.textContent = 'Refresh Page';
+    console.log(allProducts);
+//I THINK THIS IS WHERE I WANT TO STORE THE DATA IN LOCAL STORAGE//////////
+    var storingData = JSON.stringify(allProducts);
+    localStorage.setItem('data', storingData);
+    allProducts = [];
     return;
   }
   for(var b = 0; b < clearArray.length; b++){
