@@ -60,6 +60,7 @@ function handleClick() {
   if(eventCounter === 24){
     onClick.removeEventListener('click', handleClick);
     var removePictures = document.getElementById('imageContainer');
+    var toggleHideDiv = document.getElementById('hideDiv');
     removePictures.remove();
     // var newCanvas = document.createElement('canvas');
     // newCanvas.setAttribute('id', 'myGraph');
@@ -71,6 +72,8 @@ function handleClick() {
       myChart.data.datasets[1].data.push(allProducts[f].votes);
     }
     myChart.update();
+    toggleHideDiv.setAttribute('style', 'display: block');
+    tableHeadings.setAttribute('style', 'margin-top: 30vw;');
     printTableHeadings();
     var refreshLink = document.createElement('a');
     refreshLink.setAttribute('href', 'index.html');
@@ -203,14 +206,14 @@ var myChart = new Chart(ctx, {
     datasets: [{
       label: '# of Views',
       data: [],
-      backgroundColor: 'rgba(255, 99, 132, 0.2)',
-      borderColor: 'rgba(255, 99, 132, 1)',
+      backgroundColor: 'rgba(134, 30, 30, 0.2)',
+      borderColor: 'rgba(134, 30, 30, 1)',
       borderWidth: 5,
     }, {
       label: '# of Clicks',
       data: [],
-      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      borderColor: 'rgba(75, 192, 192, 0.2)',
+      backgroundColor: 'rgba(10, 63, 17, 0.2)',
+      borderColor: 'rgba(10, 63, 17, 1)',
       borderWidth: 5,
     }]
   },

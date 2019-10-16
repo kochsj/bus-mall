@@ -58,7 +58,6 @@ input {
 }
 button {
     margin-left: auto;
-    
 }
 p {
     font-size: 2vw;
@@ -70,5 +69,11 @@ h1 {
     font-size: 4vw;
 }
 canvas {
-    width: 50%;
+    background-color: darkgray;
+}
+#hideDiv {
+    display: none;
+    position: relative;
+    width: 80%;
+    margin: 10%;
 }
