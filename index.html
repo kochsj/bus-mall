@@ -5,6 +5,13 @@
     </head>
     <body>
         <h1>Bus Mall</h1>
+        <!-- /*!
+        * Chart.js v2.8.0
+        * https://www.chartjs.org
+        * (c) 2019 Chart.js Contributors
+        * Released under the MIT License
+        */ -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
         <p>Instructions: Help us by picking your favorite image. First input how many choices you would like at a time.</p>
         <p id="buttonPlacement"></p>
         <form id="userForm">
@@ -14,6 +21,9 @@
                 <button>Submit</button>
             </fieldset>
         </form>
+        <div id="hideDiv">
+            <canvas id="myGraph" width="1000px" height="650px"></canvas>
+        </div>
         <table id="resultsTable"></table>
         <section id="imageContainer"></section>
     </body>
