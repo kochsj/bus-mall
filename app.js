@@ -6,14 +6,39 @@
 //3) PARSE IT AND REINSTANTIATE IT
 //4)AFTER CHART RENDERS : SET IT
 
+//GLOBAL VARIABLES/////////////////////////////////////////////////
+var allProducts = [];
+var clearArray = [];
+
 //CHECKING IF THERE IS DATA IN LOCAL STORAGE//////////////////////
 if(localStorage.hasOwnProperty('data') === true){
   var grabData = localStorage.getItem('data');
   var dataParsed = JSON.parse(grabData);
   for(var i = 0; i < dataParsed.length; i++){
-    new Product()
+    new Product(dataParsed[i].name, dataParsed[i].views, dataParsed[i].votes);
   }
-
+} else {
+  //PRODUCT OBJECT CREATION////////////////////////////////////////
+  new Product('bag', 0, 0);
+  new Product('banana', 0, 0);
+  new Product('bathroom', 0, 0);
+  new Product('boots', 0, 0);
+  new Product('breakfast', 0, 0);
+  new Product('bubblegum', 0, 0);
+  new Product('chair', 0, 0);
+  new Product('cthulhu', 0, 0);
+  new Product('dog-duck', 0, 0);
+  new Product('dragon', 0, 0);
+  new Product('pen', 0, 0);
+  new Product('pet-sweep', 0, 0);
+  new Product('scissors', 0, 0);
+  new Product('shark', 0, 0);
+  new Product('sweep', 0, 0);
+  new Product('tauntaun', 0, 0);
+  new Product('unicorn', 0, 0);
+  new Product('usb', 0, 0);
+  new Product('water-can', 0, 0);
+  new Product('wine-glass', 0, 0);
 }
 
 //RANDOM NUMBER GENERATOR/////////////////////////////////////////
@@ -23,9 +48,7 @@ var makeRandom = function(min, max) {
   return Math.floor(Math.random()*(max - min + 1)) + min;
 };
 
-//GLOBAL VARIABLES/////////////////////////////////////////////////
-var allProducts = [];
-var clearArray = [];
+
 
 //PRODUCT OBJECT CONSTRUCTOR FUNCTION/////////////////////////////////////
 function Product(name, views, votes) {
@@ -35,29 +58,6 @@ function Product(name, views, votes) {
   this.votes = votes;
   allProducts.push(this);
 }
-
-//PRODUCT OBJECT CREATION////////////////////////////////////////
-//loop? new Product(images/[i])??
-new Product('bag', 0, 0);
-new Product('banana', 0, 0);
-new Product('bathroom', 0, 0);
-new Product('boots', 0, 0);
-new Product('breakfast', 0, 0);
-new Product('bubblegum', 0, 0);
-new Product('chair', 0, 0);
-new Product('cthulhu', 0, 0);
-new Product('dog-duck', 0, 0);
-new Product('dragon', 0, 0);
-new Product('pen', 0, 0);
-new Product('pet-sweep', 0, 0);
-new Product('scissors', 0, 0);
-new Product('shark', 0, 0);
-new Product('sweep', 0, 0);
-new Product('tauntaun', 0, 0);
-new Product('unicorn', 0, 0);
-new Product('usb', 0, 0);
-new Product('water-can', 0, 0);
-new Product('wine-glass', 0, 0);
 
 //ON CLICK EVENT HANDLER/////////////////////////////////////////
 var onClick = document.getElementById('imageContainer');
