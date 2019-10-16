@@ -1,5 +1,21 @@
 'use strict';
 
+//FEATURE TASKS FOR LOCAL STORAGE USER STORY//////////////////////
+//1) CHECK IF THERE IS DATA
+//2) IF THERE IS : GET IT
+//3) PARSE IT AND REINSTANTIATE IT
+//4)AFTER CHART RENDERS : SET IT
+
+//CHECKING IF THERE IS DATA IN LOCAL STORAGE//////////////////////
+if(localStorage.hasOwnProperty('data') === true){
+  var grabData = localStorage.getItem('data');
+  var dataParsed = JSON.parse(grabData);
+  for(var i = 0; i < dataParsed.length; i++){
+    new Product()
+  }
+
+}
+
 //RANDOM NUMBER GENERATOR/////////////////////////////////////////
 var makeRandom = function(min, max) {
   min = Math.ceil(min);
@@ -12,36 +28,36 @@ var allProducts = [];
 var clearArray = [];
 
 //PRODUCT OBJECT CONSTRUCTOR FUNCTION/////////////////////////////////////
-function Product(name) {
+function Product(name, views, votes) {
   this.name = name;
   this.path = `images/${name}.jpg`;
-  this.views = 0;
-  this.votes = 0;
+  this.views = views;
+  this.votes = votes;
   allProducts.push(this);
 }
 
 //PRODUCT OBJECT CREATION////////////////////////////////////////
 //loop? new Product(images/[i])??
-new Product('bag');
-new Product('banana');
-new Product('bathroom');
-new Product('boots');
-new Product('breakfast');
-new Product('bubblegum');
-new Product('chair');
-new Product('cthulhu');
-new Product('dog-duck');
-new Product('dragon');
-new Product('pen');
-new Product('pet-sweep');
-new Product('scissors');
-new Product('shark');
-new Product('sweep');
-new Product('tauntaun');
-new Product('unicorn');
-new Product('usb');
-new Product('water-can');
-new Product('wine-glass');
+new Product('bag', 0, 0);
+new Product('banana', 0, 0);
+new Product('bathroom', 0, 0);
+new Product('boots', 0, 0);
+new Product('breakfast', 0, 0);
+new Product('bubblegum', 0, 0);
+new Product('chair', 0, 0);
+new Product('cthulhu', 0, 0);
+new Product('dog-duck', 0, 0);
+new Product('dragon', 0, 0);
+new Product('pen', 0, 0);
+new Product('pet-sweep', 0, 0);
+new Product('scissors', 0, 0);
+new Product('shark', 0, 0);
+new Product('sweep', 0, 0);
+new Product('tauntaun', 0, 0);
+new Product('unicorn', 0, 0);
+new Product('usb', 0, 0);
+new Product('water-can', 0, 0);
+new Product('wine-glass', 0, 0);
 
 //ON CLICK EVENT HANDLER/////////////////////////////////////////
 var onClick = document.getElementById('imageContainer');
