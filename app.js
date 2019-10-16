@@ -12,7 +12,29 @@ var clearArray = [];
 
 //CHECKING IF THERE IS DATA IN LOCAL STORAGE//////////////////////
 // if(localStorage.hasOwnProperty('data') === true){
-if(localStorage.data){
+if(localStorage.data === '[]'){
+  //PRODUCT OBJECT CREATION////////////////////////////////////////
+  new Product('bag', 0, 0);
+  new Product('banana', 0, 0);
+  new Product('bathroom', 0, 0);
+  new Product('boots', 0, 0);
+  new Product('breakfast', 0, 0);
+  new Product('bubblegum', 0, 0);
+  new Product('chair', 0, 0);
+  new Product('cthulhu', 0, 0);
+  new Product('dog-duck', 0, 0);
+  new Product('dragon', 0, 0);
+  new Product('pen', 0, 0);
+  new Product('pet-sweep', 0, 0);
+  new Product('scissors', 0, 0);
+  new Product('shark', 0, 0);
+  new Product('sweep', 0, 0);
+  new Product('tauntaun', 0, 0);
+  new Product('unicorn', 0, 0);
+  new Product('usb', 0, 0);
+  new Product('water-can', 0, 0);
+  new Product('wine-glass', 0, 0);
+} else if(localStorage.data){
   var grabData = localStorage.getItem('data');
   var dataParsed = JSON.parse(grabData);
   for(var i = 0; i < dataParsed.length; i++){
@@ -20,26 +42,26 @@ if(localStorage.data){
   }
 } else {
   //PRODUCT OBJECT CREATION////////////////////////////////////////
-  // new Product('bag', 0, 0);
-  // new Product('banana', 0, 0);
-  // new Product('bathroom', 0, 0);
-  // new Product('boots', 0, 0);
-  // new Product('breakfast', 0, 0);
-  // new Product('bubblegum', 0, 0);
-  // new Product('chair', 0, 0);
-  // new Product('cthulhu', 0, 0);
-  // new Product('dog-duck', 0, 0);
-  // new Product('dragon', 0, 0);
-  // new Product('pen', 0, 0);
-  // new Product('pet-sweep', 0, 0);
-  // new Product('scissors', 0, 0);
-  // new Product('shark', 0, 0);
-  // new Product('sweep', 0, 0);
-  // new Product('tauntaun', 0, 0);
-  // new Product('unicorn', 0, 0);
-  // new Product('usb', 0, 0);
-  // new Product('water-can', 0, 0);
-  // new Product('wine-glass', 0, 0);
+  new Product('bag', 0, 0);
+  new Product('banana', 0, 0);
+  new Product('bathroom', 0, 0);
+  new Product('boots', 0, 0);
+  new Product('breakfast', 0, 0);
+  new Product('bubblegum', 0, 0);
+  new Product('chair', 0, 0);
+  new Product('cthulhu', 0, 0);
+  new Product('dog-duck', 0, 0);
+  new Product('dragon', 0, 0);
+  new Product('pen', 0, 0);
+  new Product('pet-sweep', 0, 0);
+  new Product('scissors', 0, 0);
+  new Product('shark', 0, 0);
+  new Product('sweep', 0, 0);
+  new Product('tauntaun', 0, 0);
+  new Product('unicorn', 0, 0);
+  new Product('usb', 0, 0);
+  new Product('water-can', 0, 0);
+  new Product('wine-glass', 0, 0);
 }
 
 //RANDOM NUMBER GENERATOR/////////////////////////////////////////
@@ -101,10 +123,12 @@ function handleClick() {
     refreshLinkButton.appendChild(refreshLink);
     refreshLink.textContent = 'Refresh Page';
     var refreshDataButton = document.createElement('button');
+    refreshDataButton.setAttribute('id', 'refreshData');
     resetButton.appendChild(refreshDataButton);
     refreshDataButton.textContent = 'Reset Stored Data';
-    console.log(allProducts);
-//I THINK THIS IS WHERE I WANT TO STORE THE DATA IN LOCAL STORAGE//////////
+    var buttonPressed = document.getElementById('refreshData');
+    buttonPressed.addEventListener('click', handleReset);
+    //I THINK THIS IS WHERE I WANT TO STORE THE DATA IN LOCAL STORAGE//////////
     var storingData = JSON.stringify(allProducts);
     localStorage.setItem('data', storingData);
     allProducts = [];
@@ -116,9 +140,22 @@ function handleClick() {
   }
   clearArray = [];
   eventCounter++;
-  howManyPictures();
+  renderPictures();
 }
 
+//RESET LOCALSTORAGE EVENT LISTENER////////////////////////////////////
+// var buttonPressed = document.getElementById('refreshData');
+// buttonPressed.addEventListener('click', handleReset);
+
+function handleReset(){
+  event.preventDefault();
+  localStorage.setItem('data', '[]');
+  while(tableHeadings.firstChild){
+    tableHeadings.removeChild(tableHeadings.firstChild);
+  }
+  printTableHeadings();
+  myChart.update();
+}
 //USERFORM EVENT LISTENER - HOW MANY IMAGES TO SHOW/////////////////////
 var onSubmit = document.getElementById('userForm');
 onSubmit.addEventListener('submit', handleSubmit);
@@ -129,7 +166,7 @@ function handleSubmit() {
     if(event.target.numberOfPictures.value <= 10){
       numberOfPics = (event.target.numberOfPictures.value);
       createUniqueArray();
-      howManyPictures();
+      renderPictures();
     } else {
       alert('Invalid Entry. Please choose a number between 1 and 10.');
       return;
@@ -153,7 +190,7 @@ function createUniqueArray(){
 
 //RENDER NUMBER OF IMAGES SELECTED////////////////////////////
 var imageParent = document.getElementById('imageContainer');
-function howManyPictures() {
+function renderPictures() {
   onSubmit.remove();
   for( var i = 0; i < numberOfPics; i++){
     var temp = uniqueArray.shift();
@@ -211,6 +248,7 @@ function printTableHeadings() {
     percentagePicked.textContent = `${averagePicked.toFixed(2)}%`;
   }
 }
+
 var numberOfPics = 0;
 
 //Constructor(?)/////
