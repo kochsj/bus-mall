@@ -1,5 +1,71 @@
 'use strict';
 
+//FEATURE TASKS FOR LOCAL STORAGE USER STORY//////////////////////
+//1) CHECK IF THERE IS DATA
+//2) IF THERE IS : GET IT
+//3) PARSE IT AND REINSTANTIATE IT
+//4)AFTER CHART RENDERS : SET IT
+
+//GLOBAL VARIABLES/////////////////////////////////////////////////
+var allProducts = [];
+var clearArray = [];
+var numberOfPics = 0;
+var numberOfSelections = 0;
+
+//CHECKING IF THERE IS DATA IN LOCAL STORAGE//////////////////////
+// if(localStorage.hasOwnProperty('data') === true){
+if(localStorage.data === '[]'){
+  //PRODUCT OBJECT CREATION////////////////////////////////////////
+  new Product('bag', 0, 0);
+  new Product('banana', 0, 0);
+  new Product('bathroom', 0, 0);
+  new Product('boots', 0, 0);
+  new Product('breakfast', 0, 0);
+  new Product('bubblegum', 0, 0);
+  new Product('chair', 0, 0);
+  new Product('cthulhu', 0, 0);
+  new Product('dog-duck', 0, 0);
+  new Product('dragon', 0, 0);
+  new Product('pen', 0, 0);
+  new Product('pet-sweep', 0, 0);
+  new Product('scissors', 0, 0);
+  new Product('shark', 0, 0);
+  new Product('sweep', 0, 0);
+  new Product('tauntaun', 0, 0);
+  new Product('unicorn', 0, 0);
+  new Product('usb', 0, 0);
+  new Product('water-can', 0, 0);
+  new Product('wine-glass', 0, 0);
+} else if(localStorage.data){
+  var grabData = localStorage.getItem('data');
+  var dataParsed = JSON.parse(grabData);
+  for(var i = 0; i < dataParsed.length; i++){
+    new Product(dataParsed[i].name, dataParsed[i].views, dataParsed[i].votes);
+  }
+} else {
+  //PRODUCT OBJECT CREATION////////////////////////////////////////
+  new Product('bag', 0, 0);
+  new Product('banana', 0, 0);
+  new Product('bathroom', 0, 0);
+  new Product('boots', 0, 0);
+  new Product('breakfast', 0, 0);
+  new Product('bubblegum', 0, 0);
+  new Product('chair', 0, 0);
+  new Product('cthulhu', 0, 0);
+  new Product('dog-duck', 0, 0);
+  new Product('dragon', 0, 0);
+  new Product('pen', 0, 0);
+  new Product('pet-sweep', 0, 0);
+  new Product('scissors', 0, 0);
+  new Product('shark', 0, 0);
+  new Product('sweep', 0, 0);
+  new Product('tauntaun', 0, 0);
+  new Product('unicorn', 0, 0);
+  new Product('usb', 0, 0);
+  new Product('water-can', 0, 0);
+  new Product('wine-glass', 0, 0);
+}
+
 //RANDOM NUMBER GENERATOR/////////////////////////////////////////
 var makeRandom = function(min, max) {
   min = Math.ceil(min);
@@ -7,41 +73,16 @@ var makeRandom = function(min, max) {
   return Math.floor(Math.random()*(max - min + 1)) + min;
 };
 
-//GLOBAL VARIABLES/////////////////////////////////////////////////
-var allProducts = [];
-var clearArray = [];
+
 
 //PRODUCT OBJECT CONSTRUCTOR FUNCTION/////////////////////////////////////
-function Product(name) {
+function Product(name, views, votes) {
   this.name = name;
   this.path = `images/${name}.jpg`;
-  this.views = 0;
-  this.votes = 0;
+  this.views = views;
+  this.votes = votes;
   allProducts.push(this);
 }
-
-//PRODUCT OBJECT CREATION////////////////////////////////////////
-//loop? new Product(images/[i])??
-new Product('bag');
-new Product('banana');
-new Product('bathroom');
-new Product('boots');
-new Product('breakfast');
-new Product('bubblegum');
-new Product('chair');
-new Product('cthulhu');
-new Product('dog-duck');
-new Product('dragon');
-new Product('pen');
-new Product('pet-sweep');
-new Product('scissors');
-new Product('shark');
-new Product('sweep');
-new Product('tauntaun');
-new Product('unicorn');
-new Product('usb');
-new Product('water-can');
-new Product('wine-glass');
 
 //ON CLICK EVENT HANDLER/////////////////////////////////////////
 var onClick = document.getElementById('imageContainer');
@@ -50,14 +91,16 @@ var eventCounter = 0;
 
 function handleClick() {
   event.preventDefault();
+  eventCounter++;
   var chosenImage = event.target.title;
   console.log('chosenImage: ', chosenImage);
   for(var i = 0; i < allProducts.length; i++) {
     if(allProducts[i].name === chosenImage){
       allProducts[i].votes++;
+      console.log('number of votes: ' + allProducts[i].votes);
     }
   }
-  if(eventCounter === 24){
+  if(eventCounter === numberOfSelections){
     onClick.removeEventListener('click', handleClick);
     var removePictures = document.getElementById('imageContainer');
     var toggleHideDiv = document.getElementById('hideDiv');
@@ -75,10 +118,22 @@ function handleClick() {
     toggleHideDiv.setAttribute('style', 'display: block');
     tableHeadings.setAttribute('style', 'margin-top: 30vw;');
     printTableHeadings();
+    var resetButton = document.getElementById('buttonPlacement');
+    var refreshLinkButton = document.createElement('button');
+    resetButton.appendChild(refreshLinkButton);
     var refreshLink = document.createElement('a');
     refreshLink.setAttribute('href', 'index.html');
-    resetButton.appendChild(refreshLink);
+    refreshLinkButton.appendChild(refreshLink);
     refreshLink.textContent = 'Refresh Page';
+    var refreshDataButton = document.createElement('button');
+    refreshDataButton.setAttribute('id', 'refreshData');
+    resetButton.appendChild(refreshDataButton);
+    refreshDataButton.textContent = 'Reset Stored Data';
+    var buttonPressed = document.getElementById('refreshData');
+    buttonPressed.addEventListener('click', handleReset);
+    //I THINK THIS IS WHERE I WANT TO STORE THE DATA IN LOCAL STORAGE//////////
+    var storingData = JSON.stringify(allProducts);
+    localStorage.setItem('data', storingData);
     return;
   }
   for(var b = 0; b < clearArray.length; b++){
@@ -86,11 +141,31 @@ function handleClick() {
     clear.remove();
   }
   clearArray = [];
-  eventCounter++;
-  howManyPictures();
+  renderPictures();
 }
-
-//USERFORM EVENT LISTENER - HOW MANY IMAGES TO SHOW/////////////////////
+//.getElementsByTagName()
+//RESET LOCALSTORAGE EVENT LISTENER////////////////////////////////////
+var tableReset = document.getElementById('resultsTable');
+function handleReset(){
+  event.preventDefault();
+  localStorage.setItem('data', '[]');
+  allProducts[0].views = 0;
+  for(var i = 0; i < allProducts.length; i++){
+    allProducts[i].views = 0;
+    allProducts[i].votes = 0;
+  }
+  for(var j = 0; j < 20; j++){
+    while(tableReset.firstChild){
+      tableReset.removeChild(tableReset.firstChild);
+    }
+  }
+  // tableHeadings.removeChild(tableHeadings.firstChild);
+  printTableHeadings();
+  myChart.data.datasets[0].data = [];
+  myChart.data.datasets[1].data = [];
+  myChart.update();
+}
+//USERFORM EVENT LISTENER - HOW MANY IMAGES TO SHOW && HOW MANY SELECTIONS TO MAKE/////////////////////
 var onSubmit = document.getElementById('userForm');
 onSubmit.addEventListener('submit', handleSubmit);
 
@@ -99,16 +174,27 @@ function handleSubmit() {
   if(event.target.numberOfPictures.value > 0){
     if(event.target.numberOfPictures.value <= 10){
       numberOfPics = (event.target.numberOfPictures.value);
-      createUniqueArray();
-      howManyPictures();
     } else {
-      alert('Invalid Entry. Please choose a number between 1 and 10.');
+      alert('Invalid Entry. Please choose a number of pictures to display between 1 and 10.');
       return;
     }
   }else {
-    alert('Invalid Entry. Please choose a number between 1 and 10.');
+    alert('Invalid Entry. Please choose a number of pictures to display between 1 and 10.');
     return;
   }
+  if(event.target.numberOfSelections.value > 0){
+    if(event.target.numberOfSelections.value <= 100){
+      numberOfSelections = Number(event.target.numberOfSelections.value);
+    } else {
+      alert('Invalid Entry. Please choose a number of selections to pick from between 1 and 100.');
+      return;
+    }
+  }else {
+    alert('Invalid Entry. Please choose a number of selections to pick from between 1 and 100.');
+    return;
+  }
+  createUniqueArray();
+  renderPictures();
 }
 //USER STORY ONE - making a unique random numbers array from user input////////////////
 var uniqueArray = [];
@@ -124,7 +210,7 @@ function createUniqueArray(){
 
 //RENDER NUMBER OF IMAGES SELECTED////////////////////////////
 var imageParent = document.getElementById('imageContainer');
-function howManyPictures() {
+function renderPictures() {
   onSubmit.remove();
   for( var i = 0; i < numberOfPics; i++){
     var temp = uniqueArray.shift();
@@ -141,7 +227,6 @@ function howManyPictures() {
 
 //RESULTS TABLE DISPLAY///////////////////////
 var tableHeadings = document.getElementById('resultsTable');
-var resetButton = document.getElementById('buttonPlacement');
 function printTableHeadings() {
   tableHeadings.setAttribute('class', 'tableBorder');
   var headerRow = document.createElement('tr');
@@ -183,17 +268,6 @@ function printTableHeadings() {
     percentagePicked.textContent = `${averagePicked.toFixed(2)}%`;
   }
 }
-var numberOfPics = 0;
-
-//Constructor(?)/////
-// function fillChart() {
-//   for(var c = 0; c < allProducts.length; c++) {
-//     var pictureName = ;
-//     myChart.data.labels.push(allProducts[c].name);
-//     allProducts[c].views.push(myChart.data.datasets[0].data);
-//     allProducts[c].votes.push(myChart.data.datasets[1].data);
-//   }
-// }
 
 //MAKING A BAR GRAPH////////////////////////////
 // <!-- from https://www.chartjs.org/docs/latest/ -->
