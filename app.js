@@ -131,7 +131,6 @@ function handleClick() {
     //I THINK THIS IS WHERE I WANT TO STORE THE DATA IN LOCAL STORAGE//////////
     var storingData = JSON.stringify(allProducts);
     localStorage.setItem('data', storingData);
-    allProducts = [];
     return;
   }
   for(var b = 0; b < clearArray.length; b++){
@@ -142,18 +141,23 @@ function handleClick() {
   eventCounter++;
   renderPictures();
 }
-
+//.getElementsByTagName()
 //RESET LOCALSTORAGE EVENT LISTENER////////////////////////////////////
-var htmlClassProducts = document.getElementsByClassName('products');
+var tableReset = document.getElementById('resultsTable');
 function handleReset(){
   event.preventDefault();
   localStorage.setItem('data', '[]');
-  for(var i = 0; i < 20; i++){
-    while(htmlClassProducts[i].firstChild){
-      htmlClassProducts[i].removeChild(htmlClassProducts[i].firstChild);
+  allProducts[0].views = 0;
+  for(var i = 0; i < allProducts.length; i++){
+    allProducts[i].views = 0;
+    allProducts[i].votes = 0;
+  }
+  for(var j = 0; j < 20; j++){
+    while(tableReset.firstChild){
+      tableReset.removeChild(tableReset.firstChild);
     }
   }
-  tableHeadings.removeChild(tableHeadings.firstChild);
+  // tableHeadings.removeChild(tableHeadings.firstChild);
   printTableHeadings();
   myChart.data.datasets[0].data = [];
   myChart.data.datasets[1].data = [];
