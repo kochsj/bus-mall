@@ -9,6 +9,8 @@
 //GLOBAL VARIABLES/////////////////////////////////////////////////
 var allProducts = [];
 var clearArray = [];
+var numberOfPics = 0;
+var numberOfSelections = 0;
 
 //CHECKING IF THERE IS DATA IN LOCAL STORAGE//////////////////////
 // if(localStorage.hasOwnProperty('data') === true){
@@ -89,6 +91,7 @@ var eventCounter = 0;
 
 function handleClick() {
   event.preventDefault();
+  eventCounter++;
   var chosenImage = event.target.title;
   console.log('chosenImage: ', chosenImage);
   for(var i = 0; i < allProducts.length; i++) {
@@ -97,7 +100,7 @@ function handleClick() {
       console.log('number of votes: ' + allProducts[i].votes);
     }
   }
-  if(eventCounter === 24){
+  if(eventCounter === numberOfSelections){
     onClick.removeEventListener('click', handleClick);
     var removePictures = document.getElementById('imageContainer');
     var toggleHideDiv = document.getElementById('hideDiv');
@@ -138,7 +141,6 @@ function handleClick() {
     clear.remove();
   }
   clearArray = [];
-  eventCounter++;
   renderPictures();
 }
 //.getElementsByTagName()
@@ -163,8 +165,7 @@ function handleReset(){
   myChart.data.datasets[1].data = [];
   myChart.update();
 }
-//USERFORM EVENT LISTENER - HOW MANY IMAGES TO SHOW/////////////////////
-var numberOfPics = 0;
+//USERFORM EVENT LISTENER - HOW MANY IMAGES TO SHOW && HOW MANY SELECTIONS TO MAKE/////////////////////
 var onSubmit = document.getElementById('userForm');
 onSubmit.addEventListener('submit', handleSubmit);
 
@@ -173,16 +174,27 @@ function handleSubmit() {
   if(event.target.numberOfPictures.value > 0){
     if(event.target.numberOfPictures.value <= 10){
       numberOfPics = (event.target.numberOfPictures.value);
-      createUniqueArray();
-      renderPictures();
     } else {
-      alert('Invalid Entry. Please choose a number between 1 and 10.');
+      alert('Invalid Entry. Please choose a number of pictures to display between 1 and 10.');
       return;
     }
   }else {
-    alert('Invalid Entry. Please choose a number between 1 and 10.');
+    alert('Invalid Entry. Please choose a number of pictures to display between 1 and 10.');
     return;
   }
+  if(event.target.numberOfSelections.value > 0){
+    if(event.target.numberOfSelections.value <= 100){
+      numberOfSelections = Number(event.target.numberOfSelections.value);
+    } else {
+      alert('Invalid Entry. Please choose a number of selections to pick from between 1 and 100.');
+      return;
+    }
+  }else {
+    alert('Invalid Entry. Please choose a number of selections to pick from between 1 and 100.');
+    return;
+  }
+  createUniqueArray();
+  renderPictures();
 }
 //USER STORY ONE - making a unique random numbers array from user input////////////////
 var uniqueArray = [];
