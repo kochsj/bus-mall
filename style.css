@@ -1,7 +1,16 @@
 body {
     width: 100%;
-    background-color: steelblue;
+    margin-right: auto;
+    margin-left: auto;
+    /* background-color: cornsilk; */
+    background-color: lightblue;
 }
+header, h3, p, div, table, form, #imageContainer, #instructions {
+    width: 70%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 div {
     vertical-align: middle;
     display: inline-block;
@@ -14,26 +23,27 @@ div {
     width: 69%;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 7vw;
+    margin-top: 5vw;
 }
 img {
     display: inline-block;
     width: 31%;
-    height: 30vw;
+    height: 20vw;
     vertical-align: middle;
     border: solid black 0.5vw;
 }
 img:hover {
-    border-color: rgb(160, 191, 248);
+    border-color: orange;
     transform: scale(1.3);
     transition: transform 0.8s, border-color 0.5s;
 }
 table {
-    width: 80%;
-    margin-left: 10%;
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
 }
-/* .tableBorder {
-    border: solid black 0.3vw;
-} */
+
 th, tr, td {
     width: 20vw;
 }
@@ -41,13 +51,16 @@ td {
     text-align: center;
 }
 tr:nth-child(odd) {
-    background-color: darkgrey;
+    /* background-color: rgb(253, 189, 182); */
+    background-color: rgba(51, 98, 136, 0.445);
 }
 th {
-    background-color: grey;
+    background-color: rgb(51, 98, 136);
+    font-size: 1.7vw;
 }
 form {
-    margin-top: 10vw;
+    margin-top: 7vw;
+    margin-bottom: 7vw;
 }
 form,fieldset {
     width: 70%;
@@ -56,8 +69,13 @@ form,fieldset {
     margin-right: auto;
 }
 fieldset {
-    background-color: black;
+    /* background-color: rgb(253, 189, 182); */
+    /* background-color: rgba(70, 131, 180, 0.6); */
+    background-color: rgba(0, 0, 0, 0.9);
     color: white;
+    /* color: black; */
+    /* border: black solid 0.5vw; */
+    border: rgb(51, 98, 136) solid 1vw;
 }
 label, input, button {
     display: block;
@@ -72,21 +90,63 @@ button {
     margin-left: auto;
     margin-right: auto;
 }
-p {
-    font-size: 2vw;
+#instructions {
+    font-size: 1.5vw;
+    /* background-color: rgb(253, 189, 182); */
+    /* background-color: rgba(70, 131, 180, 0.6); */
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    margin: 0vw;
+    margin-top: 7vw;
+    margin-right: auto;
+    margin-left: auto;
+    width: 50%;
+    /* border: black solid 0.5vw; */
+    border: rgb(51, 98, 136) solid 1vw;
 }
 h1, p, label, input, button {
-text-align: center;
+    text-align: center;
 }
-h1 {
+h1, h3 {
+    font-family: 'Fascinate Inline', cursive;
+    margin: 0vw;
+}
+h1{
+    font-size: 10vw;
+    display: inline-block;
+    margin-left: 3%;
+}
+h3 {
     font-size: 4vw;
+    margin-left: 14%;
 }
 canvas {
-    background-color: darkgray;
+    background-color: rgba(0, 0, 0, 0.109);
+    border: solid rgb(51, 98, 136) 1vw;
 }
 #hideDiv {
     display: none;
     position: relative;
-    width: 80%;
-    margin-left: 10%;
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 0vw;
+}
+.dividerBox {
+    /* background-color: salmon; */
+    background-color: steelblue;
+    height: 2vw;
+    border-top: solid black 0.5vw;
+    border-bottom: solid black 0.5vw;
+}
+#dividerBox2 {
+    margin-top: 7vw;
+}
+#busIcon {
+    border-radius: 50%;
+    display: inline-block;
+    height: 10vw;
+    width: 10vw;
+    vertical-align: top;
+    margin-top: 2vw;
 }

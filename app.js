@@ -116,7 +116,7 @@ function handleClick() {
     }
     myChart.update();
     toggleHideDiv.setAttribute('style', 'display: block');
-    tableHeadings.setAttribute('style', 'margin-top: 30vw;');
+    tableHeadings.setAttribute('style', 'margin-top: 9vw;');
     printTableHeadings();
     var resetButton = document.getElementById('buttonPlacement');
     var refreshLinkButton = document.createElement('button');
