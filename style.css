@@ -59,8 +59,8 @@ th {
     font-size: 1.7vw;
 }
 form {
-    margin-top: 7vw;
-    margin-bottom: 7vw;
+    margin-top: 2vw;
+    margin-bottom: 2vw;
 }
 form,fieldset {
     width: 70%;
@@ -90,14 +90,14 @@ button {
     margin-left: auto;
     margin-right: auto;
 }
-#instructions {
+.instructions {
     font-size: 1.5vw;
     /* background-color: rgb(253, 189, 182); */
     /* background-color: rgba(70, 131, 180, 0.6); */
     background-color: rgba(0, 0, 0, 0.9);
     color: white;
     margin: 0vw;
-    margin-top: 7vw;
+    margin-top: 2vw;
     margin-right: auto;
     margin-left: auto;
     width: 50%;
